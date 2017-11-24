@@ -14,7 +14,7 @@ class Band(models.Model):
 class Artist(models.Model):
     name = models.CharField(max_length=200)
     dateOfBirth = models.DateField()
-    band = models.ForeignKey(Band, on_delete=models.CASCADE)
+    band = models.ForeignKey(Band, on_delete=models.CASCADE, null=True,blank=True)
 
 class Playlist(models.Model):
     name = models.CharField(max_length=300)
@@ -23,7 +23,7 @@ class Playlist(models.Model):
 
 class Album(models.Model):
     title = models.CharField(max_length=200)
-    band = models.ForeignKey(Band, on_delete=models.CASCADE)
+    band = models.ForeignKey(Band, on_delete=models.CASCADE, null=True,blank=True)
 
 
 
@@ -33,10 +33,10 @@ class Song(models.Model):
     genre = models.CharField(max_length=250)
     lyrics = models.CharField(max_length=2000)
     length = models.DecimalField(decimal_places=3, max_digits=6)
-    album = models.ForeignKey(Album, on_delete=models.CASCADE)
-    playlists = models.ManyToManyField(Playlist)
-    bands = models.ForeignKey(Band, on_delete=models.CASCADE)
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, null=True,blank=True)
+    playlists = models.ManyToManyField(Playlist, null=True,blank=True)
+    bands = models.ForeignKey(Band, on_delete=models.CASCADE, null=True,blank=True)
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE,null=False,blank=False)
 
 
 
