@@ -25,25 +25,9 @@ class Album(models.Model):
     title = models.CharField(max_length=200)
     band = models.ForeignKey(Band, on_delete=models.CASCADE)
 
-class Single_Song(models.Model):
-    name = models.CharField(max_length=250)
-    releaseDate = models.DateField()
-    genre = models.CharField(max_length=250)
-    lyrics = models.CharField(max_length=2000)
-    length = models.DecimalField(decimal_places=3,max_digits=6)
-    playlists = models.ManyToManyField(Playlist)
-    bands = models.ForeignKey(Band, on_delete=models.CASCADE)
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
 
 
-
-
-class Single_Artist(models.Model):
-    name = models.CharField(max_length=200)
-    dateOfBirth = models.DateField()
-
-
-class Song_Album(models.Model):
+class Song(models.Model):
     name = models.CharField(max_length=250)
     releaseDate = models.DateField()
     genre = models.CharField(max_length=250)
