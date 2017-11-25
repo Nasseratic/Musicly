@@ -29,6 +29,7 @@ class Album(models.Model):
 
 class Song(models.Model):
     name = models.CharField(max_length=250)
+    path = models.CharField(max_length=400)
     releaseDate = models.DateField()
     genre = models.CharField(max_length=250)
     lyrics = models.CharField(max_length=2000)
