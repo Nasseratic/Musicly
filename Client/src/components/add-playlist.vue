@@ -1,16 +1,15 @@
 <template>
   <div>
+    <h1>ADD PLAYLIST</h1>
     <div class="field">
-      <label class="label">Name</label>
       <div class="control">
-        <input class="input" type="text" placeholder="e.g Alex Smith">
+        <input class="input" type="text" placeholder="Name">
       </div>
     </div>
 
     <div class="field">
-      <label class="label">Email</label>
       <div class="control">
-        <input class="input" type="email" placeholder="e.g. alexsmith@gmail.com">
+        <textarea class="textarea" placeholder="Description"></textarea>
       </div>
     </div>
   </div>
@@ -18,6 +17,6 @@
 
 <script>
 export default {
-  
+  name:'add-playlist'
 }
 </script>

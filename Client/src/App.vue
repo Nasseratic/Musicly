@@ -1,15 +1,15 @@
 <template>
   <div id="app">
     <app-navbar/>
-    <div class="container">
+    
       <router-view/>
-    </div>
+
   </div>
 
 </template>
 
 <script>
-import AppNavbar from './components/app-nav'
+import AppNavbar from './app-nav'
 export default {
   name: 'app',
   components: {
@@ -30,6 +30,15 @@ export default {
 }
 .card{
   padding: 0px;
+  margin: 7px;
+}
+.card-footer-item{
+  height: 100%;
+  border-radius: 0px;
+}
+
+.columns{
+  margin-top: 15px; 
 }
 
 </style>
