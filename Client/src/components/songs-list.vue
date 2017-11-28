@@ -39,13 +39,13 @@
         'a-player': VueAplayer
     },
     created(){
-      let url = 'localhost:8080/api/';
+      let url = 'http://127.0.0.1:8000/music/';
       let type = this.$route.params.type;
       let id = this.$route.params.id;
       if( id && type){
           url = url + `${type}/${id}`;
       }else{
-        url = url + 'allSongs';
+        url = url + 'allSongs/';
       }
 
       axios.get(url).then(res => {

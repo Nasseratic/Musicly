@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from collections import namedtuple
 
 
-
+@csrf_exempt
 def all_Songs(request):
     songs = Song.objects.all()
     songs_serialized = serializers.serialize('json',songs)
@@ -27,8 +27,19 @@ def add_song(request):
         j = request.body
         x = json.loads(j, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
         song = Song.objects.create(name=x.name, path=x.path, releaseDate=x.releaseDate,genre=x.genre,lyrics=x.lyrics,
-                                   length=x.length,album=x.album,playlists=x.playlists,bands=x.bands,artist=x.artist)
+                                   length=x.length , artist=Artist.objects.filter(id = x.artist)[0])
         song.save()
+        #,playlists=x.playlists,bands=x.bands,artist=x.artist
+        # playlist= Playlist.objects.filter(id= x.playlist)
+        # if x.playlist != None : 
+        #     song.playlists.add(playlist)
+        if x.album != None :
+            Album.objects.filter(id = x.album).song_set(song)
+        if x.band != None :
+            Band.objects.filter(id = x.band).song_set(song)
+        # if x.artist != None :
+        #     Artist.objects.filter(id = x.artist)[0].song_set(song)
+        
     return HttpResponse("creation is done successfully")
 
 
@@ -108,8 +119,11 @@ def add_artist(request):
     if request.method == "POST":
         j = request.body
         x = json.loads(j, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
-        artist = Artist.objects.create(name=x.name, dateOfBirth=x.dateOfBirth,band=x.band)
+        artist = Artist.objects.create(name=x.name, dateOfBirth=x.dateOfBirth)
         artist.save()
+        print(x)
+        if x.band != None:
+            Band.objects.filter(id= x.band).artist_set(artist)
     return HttpResponse("creation is done successfully")
 
 #############################################################
