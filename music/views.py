@@ -43,6 +43,9 @@ def add_song(request):
     return HttpResponse("creation is done successfully")
 
 
+def add_songToPlaylist(request, song_id,playlist_id):
+    Playlist.objects.filter(id=playlist_id).song_set(Song.objects.filter(id=song_id)[0])
+    return HttpResponse("Song is added is added successfully")
 
 
 ###########################################################
