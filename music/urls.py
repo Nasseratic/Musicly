@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^delPlaylist/(?P<playlist_id>[0-9]+)/$', views.delete_playlistById, name='delete_playlistById'),
     url(r'^addBand/$', views.add_band, name='add_band'),
     url(r'^addSong/$', views.add_song, name='add_song'),
+    url(r'^addSongToPlaylist/(?P<song_id>[0-9]+)/(?P<playlist_id>[0-9]+)/$', views.add_songToPlaylist, name='add_songToPlayList'),
     url(r'^addAlbum/$', views.add_album, name='add_album'),
     url(r'^addArtist/$', views.add_artist, name='add_artist'),
     url(r'^addPlaylist/$', views.add_playlist, name='add_playlist'),
