@@ -1,4 +1,3 @@
-
 from django.http import JsonResponse,HttpResponse
 from .models import *
 from django.core import serializers
@@ -12,11 +11,13 @@ def all_Songs(request):
     songs_serialized = serializers.serialize('json',songs)
     return JsonResponse(songs_serialized,safe=False)
 
+@csrf_exempt
 def get_songById(request, song_id):
     song = Song.objects.filter(id=song_id)
     song_serialized = serializers.serialize('json', song)
     return JsonResponse(song_serialized, safe=False)
 
+@csrf_exempt
 def delete_songById(request, song_id):
     Song.objects.filter(id=song_id).delete()
     return HttpResponse("deletion is done successfully")
@@ -46,15 +47,18 @@ def add_song(request):
 
 
 ###########################################################
+@csrf_exempt
 def all_Playlists(request):
     playlists = Playlist.objects.all()
     playlists_serialized = serializers.serialize('json',playlists)
     return JsonResponse(playlists_serialized,safe=False)
 
+@csrf_exempt
 def get_playlistById(request, playlist_id):
     playlist = Playlist.objects.filter(id=playlist_id)
     return JsonResponse(serializers.serialize('json', playlist), safe=False)
 
+@csrf_exempt
 def delete_playlistById(request, playlist_id):
     Playlist.objects.filter(id=playlist_id).delete()
     return HttpResponse("deletion is done successfully")
@@ -72,16 +76,18 @@ def add_playlist(request):
 
 
 #############################################################
-
+@csrf_exempt
 def all_Albums(request):
     albums = Album.objects.all()
     albums_serialized = serializers.serialize('json',albums)
     return JsonResponse(albums_serialized,safe=False)
 
+@csrf_exempt
 def get_albumById(request, album_id):
     album = Album.objects.filter(id=album_id)
     return JsonResponse(serializers.serialize('json', album), safe=False)
 
+@csrf_exempt
 def delete_albumById(request, album_id):
     Album.objects.filter(id=album_id).delete()
     return HttpResponse("deletion is done successfully")
