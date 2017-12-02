@@ -18,6 +18,9 @@
 
 <script>
 export default {
-  name: 'add-artist'
+  name: 'add-artist',
+  data: {
+    url:"http://127.0.0.1:8000/music/addArtist/"
+  }
 }
 </script>
