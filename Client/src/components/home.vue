@@ -1,8 +1,10 @@
 <template>
-  <div class="home">
+          <transition name="fade">
+
+  <div class="home" v-if="show">
     <section class="hero is-medium is-primary is-bold">
       <div class="hero-body super">
-        <div class="container">
+        <div class="container" >
           <h1 class="title">
             WELOCME TO MUSICLY
           </h1>
@@ -10,11 +12,13 @@
             Feel the music
           </h2>
         </div>
+
       </div>
     </section>
     <section class="hero is-lite">
       <div class="hero-body" style="background: #f9faf9bb;">
-        <div class="container">
+        <transition name="show2">
+        <div class="container" v-if="show2">
           <h2 class="subtitle" style="font-weight: 600">
             TOP SONGS
           </h2>
@@ -38,10 +42,13 @@
             <router-link to="./songslist"> <button class="button is-primary is-medium btn-text"> View ALL Songs </button> </router-link>
           </div>
         </div>
+        </transition>
       </div>
     </section>
 
   </div>
+          </transition>
+
 </template>
 
 <script>
@@ -51,11 +58,20 @@
     name: 'home',
     data() {
       return {
-
+        show:false,
+        show2 : false
       }
     },
     components: {
       'a-player': VueAplayer
+    },
+    created(){
+      setTimeout(() => {
+      this.show = true;        
+      }, 600);
+      setTimeout(() => {
+        this.show2 = true;
+      }, 1200);
     }
   }
 
@@ -107,4 +123,23 @@
     text-transform: uppercase;
     font-weight: 100;
   }
+.fade-enter-active  {
+  transition: opacity .7s
+}
+.fade-leave-active{
+  transition: opacity .7s  
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.show2-enter-active  {
+  transition: opacity 1s
+}
+.show2-leave-active{
+  transition: opacity .3s  
+}
+.show2-enter, .show2-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

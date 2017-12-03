@@ -56,9 +56,9 @@
         }
       },
       created() {
-        let $url = 'localhost/api/allAlbums';
+        let $url = 'http://127.0.0.1:8000/music/allAlbums';
         axios.get($url).then(res => {
-          this.albums = res.data;
+          this.albums = JSON.parse(res.data);
         }).catch(err => {
           alert(err);
         });

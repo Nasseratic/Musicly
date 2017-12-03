@@ -7,6 +7,7 @@ import Albums from '@/components/albums'
 import AddAlbums from '@/components/add-album'
 import AddPlaylist from '@/components/add-playlist'
 import AddArtist from '@/components/add-artist'
+import AddBand from '@/components/add-band'
 import SongsList from '@/components/songs-list'
 
 Vue.use(Router)
@@ -42,6 +43,11 @@ export default new Router({
       path: '/add/playlist',
       name: 'add-playlist',
       component: AddPlaylist
+    },
+    {
+      path: '/add/band',
+      name: 'add-band',
+      component: AddBand
     },
     {
       path: '/add/artist',

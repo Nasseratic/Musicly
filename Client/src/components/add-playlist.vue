@@ -46,7 +46,7 @@ export default {
             let data= { 'name': this.name , 'description': this.description};
             axios.post(url , data).then( (res) => {
               console.log(res.data);
-              this.$router.push('/');
+              this.$router.push('/playlists');
             });
         }   
     }
