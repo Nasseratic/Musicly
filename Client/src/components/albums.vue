@@ -14,41 +14,42 @@
       <div class="card column is-4" v-for="album in albums">
         <header class="card-header">
           <p class="card-header-title">
-            {{album.name}}
+            {{album.title}}
           </p>
-          <a href="#" class="card-header-icon" aria-label="more options">
+          <a v-on:click="del(album.id)" class="card-header-icon" aria-label="more options">
             <span class="icon">
-              <i class="fa fa-angle-down" aria-hidden="true"></i>
+             <i class="material-icons">delete</i>
             </span>
           </a>
         </header>
         <div class="card-content">
           <div class="content">
-            <a href="#">@bulmaio</a>.
-            <a href="#">#css</a>
-            <a href="#">#responsive</a>
+            BAND : <a href="#"> #{{album.band}} </a>
             <br>
-            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
           </div>
         </div>
         <footer class="card-footer">
           <a href="#" class="card-footer-item button is-primary">
             <i class="material-icons">play_arrow</i>
           </a>
-          <a href="#" class="card-footer-item button  ">
-            <i class="material-icons">playlist_add</i>
-          </a>
         </footer>
       </div>
     </div>
     </div>
+    <router-link to="../add/album">
+       <fab></fab>
+      </router-link>
   </div>
   </template>
 
   <script>
     import axios from "axios";
-
+    import fab from 'vue-fab'
+    
     export default {
+      components:{
+        fab
+      },
       name: 'albums',
       data: () => {
         return {
@@ -56,17 +57,32 @@
         }
       },
       created() {
-        let $url = 'http://127.0.0.1:8000/music/allAlbums';
+        let $url = 'http://127.0.0.1:8000/music/allAlbums/';
         axios.get($url).then(res => {
-          this.albums = JSON.parse(res.data);
+          this.albums = JSON.parse(res.data).map( e => { e.fields['id'] = e.pk; return e.fields });
         }).catch(err => {
           alert(err);
         });
+      },
+      methods:{
+      del(id){
+        let $url = 'http://127.0.0.1:8000/music/delAlbum/'+id;
+        axios.get($url).then(res => {
+          this.albums = JSON.parse(res.data).map( e => { e.fields['id'] = e.pk ;  return e.fields } );
+        }).catch(err => {
+          alert(err);
+        });  
       }
+    }
     }
 
   </script>
 
   <style scoped>
-   
+   .icon{
+  color: firebrick;
+}
+.icon :hover{
+  color: red;
+}
   </style>

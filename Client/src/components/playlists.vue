@@ -14,11 +14,11 @@
       <div class="container">
       <div >
         <transition-group name="list" class="columns is-multiline">
-            <div class="column is-one-third" v-for="playlist in playlists" v-bind:key="playlist.name">
+            <div class="column is-one-third" v-for="playlist in playlists" v-bind:key="playlist.id">
               <div class="card">
               <header class="card-header">
                 <p class="card-header-title">
-                  {{playlist.name}}
+                  #{{playlist.id}} {{playlist.name}}
                 </p>
                 <a v-on:click="del(playlist.id)" class="card-header-icon" aria-label="more options">
                   <span class="icon">

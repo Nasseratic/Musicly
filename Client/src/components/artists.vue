@@ -12,7 +12,7 @@
     </section>
     <div class="container">
       <transition-group name="list" class="columns is-multiline">
-        <div class="column is-4" v-for="artist in artists" v-bind:key="artist.name">
+        <div class="column is-4" v-for="artist in artists" v-bind:key="artist.id">
           <div class="card ">
                 
               <article class="media">
@@ -40,15 +40,20 @@
         </div>
       </transition-group>
     </div>
-
+      <router-link to="../add/artist">
+       <fab></fab>
+      </router-link>
   </div>
 </transition>
 </template>
 
 <script>
   import axios from 'axios'
-
+  import fab from 'vue-fab'
   export default {
+    components:{
+      fab
+    },
     name: 'artists',
     data: () => {
       return {
@@ -59,12 +64,12 @@
     created() {
       setTimeout(() => {
         this.show = true
-      let $url = 'http://127.0.0.1:8000/music/allArtist';
-      axios.get($url).then(res => {
-        this.artists = JSON.parse(res.data).map( e => { e.fields['id'] = e.pk ;  return e.fields } );
-      }).catch(err => {
-        alert(err);
-      });  
+        let $url = 'http://127.0.0.1:8000/music/allArtist';
+        axios.get($url).then(res => {
+          this.artists = JSON.parse(res.data).map( e => { e.fields['id'] = e.pk ;  return e.fields } );
+        }).catch(err => {
+          alert(err);
+        });  
       }, 600);
     
     },

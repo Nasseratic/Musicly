@@ -20,7 +20,8 @@ def get_songById(request, song_id):
 @csrf_exempt
 def delete_songById(request, song_id):
     Song.objects.filter(id=song_id).delete()
-    return HttpResponse("deletion is done successfully")
+    return JsonResponse(serializers.serialize('json', Song.objects.all() ), safe=False)
+    
 
 @csrf_exempt
 def add_song(request):
@@ -34,9 +35,9 @@ def add_song(request):
         # playlist= Playlist.objects.filter(id= x.playlist)
         # if x.playlist != None : 
         #     song.playlists.add(playlist)
-        if x.album != None :
+        if x.album != '' :
             Album.objects.filter(id = x.album).song_set(song)
-        if x.band != None :
+        if x.band != '' :
             Band.objects.filter(id = x.band).song_set(song)
         # if x.artist != None :
         #     Artist.objects.filter(id = x.artist)[0].song_set(song)
@@ -45,8 +46,8 @@ def add_song(request):
 
 
 def add_songToPlaylist(request, song_id,playlist_id):
-    Playlist.objects.filter(id=playlist_id).song_set(Song.objects.filter(id=song_id)[0])
-    return HttpResponse("Song is added is added successfully")
+    Song.objects.filter(id=song_id)[0].playlists.add( Playlist.objects.filter(id=playlist_id)[0] )
+    return HttpResponse("Song is added is added successfully")  
 
 
 ###########################################################
@@ -59,12 +60,19 @@ def all_Playlists(request):
 @csrf_exempt
 def get_playlistById(request, playlist_id):
     playlist = Playlist.objects.filter(id=playlist_id)
-    return JsonResponse(serializers.serialize('json', playlist), safe=False)
+    sendObj = {}
+    sendObj['type'] = serializers.serialize('json', playlist )
+    sendObj['artists'] =[]
+    for i in Song.objects.filter(playlists = playlist):
+        sendObj['artists'].append(i.artist)
+    sendObj['artists'] = serializers.serialize('json', sendObj['artists'])  
+    sendObj['songs'] =  serializers.serialize('json', Song.objects.filter(playlists = playlist) ) 
+    return JsonResponse( sendObj, safe=False)
 
 @csrf_exempt
 def delete_playlistById(request, playlist_id):
     Playlist.objects.filter(id=playlist_id).delete()
-    return HttpResponse("deletion is done successfully")
+    return JsonResponse(serializers.serialize('json', Playlist.objects.all() ), safe=False)
 
 
 @csrf_exempt
@@ -93,7 +101,8 @@ def get_albumById(request, album_id):
 @csrf_exempt
 def delete_albumById(request, album_id):
     Album.objects.filter(id=album_id).delete()
-    return HttpResponse("deletion is done successfully")
+    return JsonResponse(serializers.serialize('json', Album.objects.all()), safe=False)
+    
 
 
 @csrf_exempt
@@ -101,7 +110,7 @@ def add_album(request):
     if request.method == "POST":
         j = request.body
         x = json.loads(j, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
-        album = Album.objects.create(title=x.title, band=x.band)
+        album = Album.objects.create(title=x.title, band= Band.objects.filter(id= x.band )[0] )
         album.save()
     return HttpResponse("creation is done successfully")
 
@@ -120,7 +129,7 @@ def get_artistById(request, artist_id):
 
 def delete_artistById(request, artist_id):
     Artist.objects.filter(id=artist_id).delete()
-    return HttpResponse("deletion is done successfully")
+    return JsonResponse(serializers.serialize('json', Artist.objects.all()), safe=False)
 
 
 @csrf_exempt
@@ -131,8 +140,8 @@ def add_artist(request):
         artist = Artist.objects.create(name=x.name, dateOfBirth=x.dateOfBirth)
         artist.save()
         print(x)
-        if x.band != None:
-            Band.objects.filter(id= x.band).artist_set(artist)
+        if x.band != '':
+            artist.band = Band.objects.filter(id= x.band)[0]
     return HttpResponse("creation is done successfully")
 
 #############################################################

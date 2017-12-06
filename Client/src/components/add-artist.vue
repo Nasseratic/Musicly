@@ -33,7 +33,7 @@ export default {
     return{
       name:'',
       dateOfBirth:'',
-      band:''
+      band : 3
     }
   },
   methods: {

@@ -17,6 +17,9 @@
       <a class="navbar-item" href="#/">
         HOME
       </a>
+      <a class="navbar-item" href="#/songslist">
+        SONGS
+      </a>
       <a class="navbar-item" href="#/playlists">
         PLAYLISTS
       </a>

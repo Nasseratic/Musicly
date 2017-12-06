@@ -71,7 +71,7 @@
       }, 600);
       setTimeout(() => {
         this.show2 = true;
-      }, 1200);
+      }, 750);
     }
   }
 
